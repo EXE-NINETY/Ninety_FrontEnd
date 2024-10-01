@@ -1,4 +1,5 @@
 import React from "react";
+import { Image, NavDropdown } from "react-bootstrap";
 
 const CustomNavbar = () => {
     return (
@@ -75,6 +76,21 @@ const CustomNavbar = () => {
                             aria-label="Search"
                         />
                     </form>
+                    <div className="d-flex">
+                        <Image
+                            src="../logo192.png"
+                            alt="123"
+                            width="30"
+                            height="30"
+                            rounded
+                            className="me-2"
+                        />
+                        <NavDropdown title="Minh Duy" id="basic-nav-dropdown">
+                            <NavDropdown.Item href="#action/3.1">Hồ sơ</NavDropdown.Item>
+                            <NavDropdown.Item href="/Login">Đăng xuất</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                        </NavDropdown>
+                    </div>
                 </div>
             </div>
         </nav>

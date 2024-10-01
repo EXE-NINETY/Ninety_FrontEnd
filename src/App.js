@@ -4,9 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from './components/Footer';
 import Layout from './components/Layout';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ReactDOM from "react-dom/client";
 import NotFoundPage from './pages/NotFoundPage';
 import HomePage from './pages/HomePage';
+import Login from './pages/Login';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +21,10 @@ const router = createBrowserRouter([
     ],
     errorElement: <NotFoundPage />,
   },
+  {
+    path:"/Login",
+    element: <Login />
+  }
 ]);
 
 function App() {
