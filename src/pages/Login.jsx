@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Button, Form, Image } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -10,16 +11,24 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://localhost:7175/api/auth/login', {
+            const response = await axios.post('http://localhost:5090/api/auth/login', {
                 username: username,
-                password: password
+                password: password,
             });
             console.log('Login successful:', response.data);
-            // Handle successful login here (e.g., redirect to another page, store token, etc.)
+            sessionStorage.setItem('accountDTO', JSON.stringify(response.data.accountDTO));
+            toast.success('Sign in successful!', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
             navigate('/');
         } catch (error) {
             console.error('Error during login:', error);
-            // Handle error here (e.g., show error message to the user)
         }
     };
 
@@ -37,19 +46,17 @@ const Login = () => {
                         </Col>
                         <Col md={7} lg={5} xl={5} className="offset-xl-1">
                             <Form onSubmit={handleLogin}>
-                                {/* Email input */}
                                 <Form.Group className="form-outline mb-4">
                                     <Form.Control
                                         type="email"
                                         id="form1Example13"
                                         className="form-control-lg"
-                                        placeholder="Email address"
+                                        placeholder="Username"
                                         value={username}
                                         onChange={(e) => setUsername(e.target.value)}
                                     />
                                 </Form.Group>
 
-                                {/* Password input */}
                                 <Form.Group className="form-outline mb-4">
                                     <Form.Control
                                         type="password"
@@ -62,7 +69,6 @@ const Login = () => {
                                 </Form.Group>
 
                                 <div className="d-flex justify-content-around align-items-center mb-4">
-                                    {/* Checkbox */}
                                     <Form.Check
                                         type="checkbox"
                                         id="form1Example3"
@@ -72,12 +78,11 @@ const Login = () => {
                                     <a href="#!">Forgot password?</a>
                                 </div>
 
-                                {/* Submit button */}
                                 <Button type="submit" className="btn-lg btn-block me-2">
                                     Sign in
                                 </Button>
 
-                                <Button className="btn-lg btn-success">
+                                <Button className="btn-lg btn-success" href='/Sign-up'>
                                     Sign up
                                 </Button>
 
@@ -85,7 +90,6 @@ const Login = () => {
                                     <p className="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
                                 </div>
 
-                                {/* Social login buttons */}
                                 <Button
                                     className="btn-lg btn-block me-1"
                                     style={{ backgroundColor: '#3b5998' }}

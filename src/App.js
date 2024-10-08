@@ -7,6 +7,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import NotFoundPage from './pages/NotFoundPage';
 import HomePage from './pages/HomePage';
 import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+import Profile from './pages/UserProfile';
 
 const router = createBrowserRouter([
   {
@@ -14,7 +16,7 @@ const router = createBrowserRouter([
     element: <Layout />, // Sử dụng Layout ở đây
     children: [
       { path: "/", element: <HomePage /> },
-      // { path: "about", element: <AboutPage /> },
+      { path: "/about", element: <Profile /> },
       // { path: "products", element: <ProductsPage /> },
       // { path: "products/:id", element: <ProductDetailPage /> }, // Route cho ProductDetailPage
       // { path: "flowers/:id", element: <FlowerDetailPage /> }, // Route cho FlowerDetailPage
@@ -24,6 +26,10 @@ const router = createBrowserRouter([
   {
     path:"/Login",
     element: <Login />
+  },
+  {
+    path:"/Sign-up",
+    element: <SignUp />
   }
 ]);
 

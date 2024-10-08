@@ -2,6 +2,7 @@ import React from "react";
 import { Image, NavDropdown } from "react-bootstrap";
 
 const CustomNavbar = () => {
+    const accountDTO = JSON.parse(sessionStorage.getItem('accountDTO'));
     return (
         <nav
             className="navbar navbar-expand-xxl navbar-dark"
@@ -9,7 +10,7 @@ const CustomNavbar = () => {
             style={{ backgroundColor: '#5BBE01' }}
         >
             <div className="container-fluid">
-                <a className="navbar-brand" href="#">
+                <a className="navbar-brand" href="#" >
                     Expand at xxl
                 </a>
                 <button
@@ -68,7 +69,7 @@ const CustomNavbar = () => {
                             </ul>
                         </li>
                     </ul>
-                    <form role="search">
+                    <form role="search" className="me-4">
                         <input
                             className="form-control"
                             type="search"
@@ -85,8 +86,15 @@ const CustomNavbar = () => {
                             rounded
                             className="me-2"
                         />
-                        <NavDropdown title="Minh Duy" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">Hồ sơ</NavDropdown.Item>
+                        <NavDropdown
+                            title={
+                                <span>
+                                    Welcome, <span style={{ color: 'black' }}>{accountDTO?.name || "Guest"}</span>
+                                </span>
+                            }
+                            id="basic-nav-dropdown"
+                        >
+                            <NavDropdown.Item href="/about">Hồ sơ</NavDropdown.Item>
                             <NavDropdown.Item href="/Login">Đăng xuất</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                         </NavDropdown>
