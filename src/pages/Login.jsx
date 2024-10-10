@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -17,15 +18,7 @@ const Login = () => {
             });
             console.log('Login successful:', response.data);
             sessionStorage.setItem('accountDTO', JSON.stringify(response.data.accountDTO));
-            toast.success('Sign in successful!', {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            toast.success('Sign in successful!');
             navigate('/');
         } catch (error) {
             console.error('Error during login:', error);

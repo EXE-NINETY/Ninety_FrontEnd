@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+
+
+const countries = [
+    { code: "US", name: "United States of America" },
+    { code: "VN", name: "Viet Nam" },
+    { code: "JP", name: "Japan" },
+    { code: "FR", name: "France" },
+];
 
 const Profile = () => {
     const [profile, setProfile] = useState({
@@ -12,14 +22,22 @@ const Profile = () => {
 
     useEffect(() => {
         const accountDTO = JSON.parse(sessionStorage.getItem('accountDTO'));
-        if (accountDTO) {
-            setProfile({
-                name: accountDTO.name || '',
-                dob: accountDTO.dateOfBirth ? accountDTO.dateOfBirth.split('T')[0] : '',
-                gender: accountDTO.gender || '',
-                phoneNumber: accountDTO.phoneNumber || '',
+        console.log(accountDTO.id);
+
+        axios.get(`http://localhost:5090/api/user/${accountDTO.id}`)
+            .then(response => {
+                const userData = response.data.data;
+                setProfile({
+                    name: userData.name || '',
+                    dob: userData.dateOfBirth ? userData.dateOfBirth.split('T')[0] : '',
+                    nationality: userData.nationality || '',
+                    gender: userData.gender || '',
+                    phoneNumber: userData.phoneNumber || '',
+                });
+            })
+            .catch(error => {
+                console.error('There was an error fetching the user data!', error);
             });
-        }
     }, []);
 
     const handleChange = (e) => {
@@ -31,7 +49,26 @@ const Profile = () => {
     };
 
     const handleSaveProfile = () => {
-        console.log('Profile updated:', profile);
+        const accountDTO = JSON.parse(sessionStorage.getItem('accountDTO'));
+
+        const updatedProfile = {
+            id: accountDTO.id,
+            name: profile.name,
+            dateOfBirth: profile.dob,
+            password: accountDTO.password,
+            nationality: profile.nationality,
+            gender: profile.gender,
+            phoneNumber: profile.phoneNumber,
+        };
+
+        axios.put(`http://localhost:5090/api/user/${accountDTO.id}`, updatedProfile)
+            .then(response => {
+                console.log('Profile updated successfully:', response.data);
+                toast.success('Update profile successful!');
+            })
+            .catch(error => {
+                console.error('There was an error updating the profile!', error);
+            });
     };
 
     return (
@@ -109,7 +146,7 @@ const Profile = () => {
                                     </Form.Group>
                                 </Col>
 
-                                <Col md={9}>
+                                {/* <Col md={9}>
                                     <Form.Group>
                                         <Form.Label className="labels text-dark">Nationality</Form.Label>
                                         <Form.Control
@@ -119,6 +156,24 @@ const Profile = () => {
                                             name="nationality"
                                             onChange={handleChange}
                                         />
+                                    </Form.Group>
+                                </Col> */}
+                                <Col md={9}>
+                                    <Form.Group>
+                                        <Form.Label className="labels text-dark">Nationality</Form.Label>
+                                        <Form.Select
+                                            aria-label="Select nationality"
+                                            name="nationality"
+                                            value={profile.nationality}
+                                            onChange={handleChange}
+                                        >
+                                            <option value="" disabled>Select Nationality</option>
+                                            {countries.map(country => (
+                                                <option key={country.name} value={country.name}>
+                                                    {country.name}
+                                                </option>
+                                            ))}
+                                        </Form.Select>
                                     </Form.Group>
                                 </Col>
                             </Row>

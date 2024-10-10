@@ -22,15 +22,7 @@ const SignUp = () => {
                 role: role,
                 phoneNumber: phoneNumber
             });
-            toast.success('Sign up successful!', {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            toast.success('Sign up successful!');
             setTimeout(() => {
                 navigate('/');
             }, 3000);
