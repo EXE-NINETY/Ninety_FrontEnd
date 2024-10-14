@@ -8,6 +8,8 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Profile from './pages/UserProfile';
 import Teams from './pages/Teams';
+import Tournament from './pages/Tournament';
+import TeamDetail from './pages/TeamDetail';
 
 const router = createBrowserRouter([
   {
@@ -17,6 +19,8 @@ const router = createBrowserRouter([
       { path: "/", element: <HomePage /> },
       { path: "/about", element: <Profile /> },
       { path: "/teams", element: <Teams /> },
+      { path: "/tournaments", element: <Tournament /> },
+      { path: "/teams/:id", element: <TeamDetail /> },
       // { path: "products/:id", element: <ProductDetailPage /> }, // Route cho ProductDetailPage
       // { path: "flowers/:id", element: <FlowerDetailPage /> }, // Route cho FlowerDetailPage
     ],

@@ -10,8 +10,8 @@ const CustomNavbar = () => {
             style={{ backgroundColor: '#5BBE01' }}
         >
             <div className="container-fluid">
-                <a className="navbar-brand" href="#" >
-                    Expand at xxl
+                <a className="navbar-brand" href="/" >
+                    NINETY
                 </a>
                 <button
                     className="navbar-toggler"
@@ -69,14 +69,14 @@ const CustomNavbar = () => {
                             </ul>
                         </li>
                     </ul>
-                    <form role="search" className="me-4">
+                    {/* <form role="search" className="me-4">
                         <input
                             className="form-control"
                             type="search"
                             placeholder="Search"
                             aria-label="Search"
                         />
-                    </form>
+                    </form> */}
                     <div className="d-flex">
                         <Image
                             src="../logo192.png"

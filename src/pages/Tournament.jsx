@@ -10,16 +10,23 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Box, TextField, Button } from '@mui/material';
-import CreateTeamDialog from './CreateTeamDialog';
-import { Link, useNavigate } from 'react-router-dom';
+import { format } from 'date-fns';
+import CreateTournamentDialog from './CreateTournamentDialog';
 
 const columns = [
-    { id: 'name', label: 'Name', minWidth: 170 },
-    { id: 'description', label: 'Description', minWidth: 200 },
-    { id: 'tournamentName', label: 'Tournament Name', minWidth: 100, align: 'right' },
+    { id: 'name', label: 'Name', minWidth: 170, align: 'left' },
+    { id: 'description', label: 'Description', minWidth: 100, align: 'left' },
+    { id: 'rules', label: 'Rules', minWidth: 100, align: 'left' },
+    { id: 'format', label: 'Format', minWidth: 100, align: 'left' },
+    { id: 'numOfParticipants', label: 'Team', minWidth: 70, align: 'left' },
+    { id: 'startDate', label: 'Start Date', minWidth: 150, align: 'left' },
+    { id: 'endDate', label: 'End Date', minWidth: 150, align: 'left' },
+    { id: 'fee', label: 'Fee', minWidth: 70, align: 'left' },
+    { id: 'place', label: 'Place', minWidth: 100, align: 'left' },
+    { id: 'sportId', label: 'Môn thể thao', minWidth: 100, align: 'left' },
 ];
 
-const Teams = () => {
+const Tournament = () => {
     const [rows, setRows] = useState([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -27,17 +34,14 @@ const Teams = () => {
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
     const [openDialog, setOpenDialog] = useState(false);
-    const navigate = useNavigate(); // Use navigate for programmatic navigation
 
-    const handleRowClick = (id) => {
-        navigate(`/teams/${id}`); // Navigate to TeamDetail page with the team's ID
-    };
-    const fetchTeams = async () => {
+    const fetchTournament = async () => {
         setLoading(true);
         try {
             const response = await axios.get(
-                `http://localhost:5090/api/team/all?PageNumber=${page + 1}&PageSize=${rowsPerPage}&Name=${searchQuery}`
+                `http://localhost:5090/api/tournament/all?PageNumber=${page + 1}&PageSize=${rowsPerPage}&Name=${searchQuery}`
             );
+            console.log(response.data.data)
             const { data, totalCount } = response.data;
             setRows(data || []);
             setTotalRows(totalCount || 0);
@@ -50,7 +54,7 @@ const Teams = () => {
     };
 
     useEffect(() => {
-        fetchTeams();
+        fetchTournament();
     }, [page, rowsPerPage, searchQuery]);
 
     const handleChangePage = (event, newPage) => {
@@ -74,8 +78,8 @@ const Teams = () => {
         setOpenDialog(false);
     };
 
-    const handleTeamCreated = () => {
-        fetchTeams();
+    const handleTournamentCreated = () => {
+        fetchTournament();
     };
 
     return (
@@ -89,11 +93,11 @@ const Teams = () => {
                     onChange={handleSearchChange}
                     sx={{ mr: 2 }}
                 />
-                <Button variant="contained" onClick={fetchTeams}>
+                <Button variant="contained" onClick={fetchTournament}>
                     Search
                 </Button>
                 <Button sx={{ marginLeft: 'auto' }} variant="contained" onClick={handleOpenDialog}>
-                    Create New Team
+                    Create New Tournament
                 </Button>
             </Box>
             <TableContainer>
@@ -119,10 +123,21 @@ const Teams = () => {
                         <TableBody>
                             {rows.length > 0 ? (
                                 rows.map((row) => (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id} onClick={() => handleRowClick(row.id)} style={{ cursor: 'pointer' }}>
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                                         <TableCell align="left">{row.name}</TableCell>
                                         <TableCell align="left">{row.description}</TableCell>
-                                        <TableCell align="right">{row.tournament?.name}</TableCell>
+                                        <TableCell align="left">{row.rules}</TableCell>
+                                        <TableCell align="left">{row.format}</TableCell>
+                                        <TableCell align="left">{row.numOfParticipants}</TableCell>
+                                        <TableCell align="left">
+                                            {row.startDate ? format(new Date(row.startDate), 'dd/MM/yyyy') : 'N/A'}
+                                        </TableCell>
+                                        <TableCell align="left">
+                                            {row.endDate ? format(new Date(row.endDate), 'dd/MM/yyyy') : 'N/A'}
+                                        </TableCell>
+                                        <TableCell align="left">{row.fee}</TableCell>
+                                        <TableCell align="left">{row.place}</TableCell>
+                                        <TableCell align="left">{row.sport.name}</TableCell>
                                     </TableRow>
                                 ))
                             ) : (
@@ -166,9 +181,9 @@ const Teams = () => {
                     },
                 }}
             />
-            <CreateTeamDialog open={openDialog} onClose={handleCloseDialog} onTeamCreated={handleTeamCreated} />
+            <CreateTournamentDialog open={openDialog} onClose={handleCloseDialog} onTournamentCreated={handleTournamentCreated} />
         </Paper>
     );
 };
 
-export default Teams;
+export default Tournament;
