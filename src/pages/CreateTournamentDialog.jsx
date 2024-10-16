@@ -19,6 +19,8 @@ export default function CreateTournamentDialog({ open, onClose, onTournamentCrea
         format: '',
         rules: '',
         numOfParticipants: 0,
+        CreateMatch: 0,
+        IsRegister: 1,
         startDate: null,
         endDate: null,
         fee: 0,
@@ -117,7 +119,7 @@ export default function CreateTournamentDialog({ open, onClose, onTournamentCrea
                     name="rules"
                     label="Rules"
                     fullWidth
-                    value={formData.description}
+                    value={formData.rules}
                     onChange={handleInputChange}
                 />
                 <FormControl fullWidth margin="dense">

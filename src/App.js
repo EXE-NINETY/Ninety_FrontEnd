@@ -10,17 +10,19 @@ import Profile from './pages/UserProfile';
 import Teams from './pages/Teams';
 import Tournament from './pages/Tournament';
 import TeamDetail from './pages/TeamDetail';
+import TournamentDetail from './pages/TournamentDetail';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />, // Sử dụng Layout ở đây
+    element: <Layout />,
     children: [
       { path: "/", element: <HomePage /> },
       { path: "/about", element: <Profile /> },
       { path: "/teams", element: <Teams /> },
       { path: "/tournaments", element: <Tournament /> },
       { path: "/teams/:id", element: <TeamDetail /> },
+      { path: "/tournaments/:id", element: <TournamentDetail /> },
       // { path: "products/:id", element: <ProductDetailPage /> }, // Route cho ProductDetailPage
       // { path: "flowers/:id", element: <FlowerDetailPage /> }, // Route cho FlowerDetailPage
     ],

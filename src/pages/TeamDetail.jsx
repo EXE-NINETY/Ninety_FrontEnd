@@ -1,61 +1,68 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Box, Typography, CircularProgress, Tabs, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { Button, Card, Col, Row } from 'react-bootstrap';
 import { AccessTime, CalendarToday, LocationOn } from '@mui/icons-material';
+import AddMemberDialog from './AddMemberDialog';
 
 const TeamDetail = () => {
     const { id } = useParams();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const tournamentId = queryParams.get('tournamentId');
+
     const [team, setTeam] = useState(null);
     const [members, setMembers] = useState([]);
+    const [matches, setMatches] = useState([]);
+    const [ranking, setRanking] = useState([]);
     const [loading, setLoading] = useState(true);
     const [loadingMembers, setLoadingMembers] = useState(true);
+    const [loadingMatches, setLoadingMatches] = useState(true);
+    const [loadingRanking, setLoadingRanking] = useState(true);
     const [error, setError] = useState('');
     const [value, setValue] = React.useState('one');
+    const [openDialog, setOpenDialog] = useState(false);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
-    const matches = [
-        {
-            id: 1,
-            teamA: 'Team A',
-            teamB: 'Team B',
-            round: '1',
-            date: 'October 15, 2024',
-            time: '3:00 PM',
-            location: 'Stadium XYZ'
-        },
-        {
-            id: 2,
-            teamA: 'Team C',
-            teamB: 'Team D',
-            round: '1',
-            date: 'October 16, 2024',
-            time: '5:00 PM',
-            location: 'Arena ABC'
-        },
-        {
-            id: 3,
-            teamA: 'Team A',
-            teamB: 'Team C',
-            round: '2',
-            date: 'October 16, 2024',
-            time: '5:00 PM',
-            location: 'Arena ABC'
-        },
-        {
-            id: 4,
-            teamA: 'Team B',
-            teamB: 'Team D',
-            round: '2',
-            date: 'October 16, 2024',
-            time: '5:00 PM',
-            location: 'Arena ABC'
-        },
-    ];
+    const fetchTeamMembers = async () => {
+        setLoadingMembers(true);
+        try {
+            const response = await axios.get(`http://localhost:5090/api/team/member/${id}`);
+            setMembers(response.data.data);
+        } catch (err) {
+            setError('Error fetching team members');
+        } finally {
+            setLoadingMembers(false);
+        }
+    };
+
+    const fetchMatches = async () => {
+        setLoadingMatches(true);
+        try {
+            const response = await axios.get(`http://localhost:5090/api/match/teams/${id}?tournamentId=${tournamentId}`);
+            setMatches(response.data.data);
+        } catch (err) {
+            setError('Error fetching match data');
+        } finally {
+            setLoadingMatches(false);
+        }
+    };
+
+    const fetchRanking = async () => {
+        setLoadingRanking(true);
+        try {
+            const response = await axios.get(`http://localhost:5090/api/ranking/tournament/${tournamentId}`);
+            setRanking(response.data.data);
+        } catch (err) {
+            setError('Error fetching ranking data');
+        } finally {
+            setLoadingRanking(false);
+        }
+    };
 
     useEffect(() => {
         const fetchTeamDetail = async () => {
@@ -70,23 +77,13 @@ const TeamDetail = () => {
             }
         };
 
-        const fetchTeamMembers = async () => {
-            setLoadingMembers(true);
-            try {
-                const response = await axios.get(`http://localhost:5090/api/team/member/${id}`);
-                setMembers(response.data.data);
-            } catch (err) {
-                setError('Error fetching team members');
-            } finally {
-                setLoadingMembers(false);
-            }
-        };
-
         fetchTeamDetail();
         fetchTeamMembers();
+        fetchMatches();
+        fetchRanking();
     }, [id]);
 
-    if (loading || loadingMembers) {
+    if (loading || loadingMembers || loadingMatches || loadingRanking) {
         return (
             <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
                 <CircularProgress />
@@ -120,6 +117,19 @@ const TeamDetail = () => {
         }, {});
     };
 
+    const handleOpenDialog = () => {
+        setOpenDialog(true);
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+    };
+
+    const onMemberAdd = () => {
+        fetchTeamMembers();
+        handleCloseDialog();
+    };
+
     const groupedMatches = groupMatchesByRound(matches);
 
     return (
@@ -138,6 +148,7 @@ const TeamDetail = () => {
                 <Tab value="one" label="Introduce" wrapped />
                 <Tab value="two" label="Team Members" wrapped />
                 <Tab value="three" label="Match Info" wrapped />
+                <Tab value="four" label="Ranking" wrapped />
             </Tabs>
 
             <Box sx={{ p: 2 }}>
@@ -149,8 +160,12 @@ const TeamDetail = () => {
                         </Typography>
                     </>
                 )}
+
                 {value === 'two' && (
                     <>
+                        <Button onClick={handleOpenDialog} variant="primary" className="mb-3">
+                            Add Team Member
+                        </Button>
                         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                             <TableContainer>
                                 <Table stickyHeader aria-label="sticky table">
@@ -186,6 +201,7 @@ const TeamDetail = () => {
                                     </TableBody>
                                 </Table>
                             </TableContainer>
+                            <AddMemberDialog open={openDialog} onClose={handleCloseDialog} onTeamUpdated={onMemberAdd} teamId={id} />
                         </Paper>
                     </>
                 )}
@@ -197,23 +213,23 @@ const TeamDetail = () => {
                                 <div key={round}>
                                     <h4 className="mt-4">Round {round}</h4>
                                     {groupedMatches[round].map(match => (
-                                        <Card className="mb-3 shadow-sm" key={match.id} style={{ transition: 'transform 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>
+                                        <Card className="mb-3 shadow-sm" key={match.id} style={{ transition: 'transform 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} >
                                             <Card.Header className="bg-primary text-white">
-                                                <h5 className="m-0">{`Match: ${match.teamA} vs ${match.teamB}`}</h5>
+                                                <h5 className="m-0">{`Match: Team ${match.teamA} vs Team ${match.teamB}`}</h5>
                                             </Card.Header>
                                             <Card.Body>
                                                 <Row>
                                                     <Col md={4} className="d-flex align-items-center">
                                                         <CalendarToday className="mr-2" />
-                                                        <p className="m-0"><strong>Date:</strong> {match.date}</p>
+                                                        <p className="m-0"><strong>Date:</strong> {new Date(match.date).toLocaleDateString()}</p>
                                                     </Col>
                                                     <Col md={4} className="d-flex align-items-center">
                                                         <AccessTime className="mr-2" />
-                                                        <p className="m-0"><strong>Time:</strong> {match.time}</p>
+                                                        <p className="m-0"><strong>Time:</strong> {new Date(match.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                                                     </Col>
                                                     <Col md={4} className="d-flex align-items-center text-right">
                                                         <LocationOn className="mr-2" />
-                                                        <p className="m-0"><strong>Location:</strong> {match.location}</p>
+                                                        <p className="m-0"><strong>Location:</strong> {match.tournament.place}</p>
                                                     </Col>
                                                 </Row>
                                                 <Row>
@@ -227,6 +243,36 @@ const TeamDetail = () => {
                                 </div>
                             ))}
                         </div>
+                    </>
+                )}
+                {value === 'four' && (
+                    <>
+                        <h3>Team Ranking</h3>
+                        <TableContainer component={Paper}>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Rank</TableCell>
+                                        <TableCell>Team Name</TableCell>
+                                        <TableCell>Points</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {ranking.map((rank) => (
+                                        <TableRow
+                                            key={rank.id}
+                                            style={{
+                                                backgroundColor: rank.teamId === team.id ? 'yellow' : 'inherit'
+                                            }}
+                                        >
+                                            <TableCell>{rank.rank}</TableCell>
+                                            <TableCell>{rank.team.name}</TableCell>
+                                            <TableCell>{rank.point}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </>
                 )}
             </Box>

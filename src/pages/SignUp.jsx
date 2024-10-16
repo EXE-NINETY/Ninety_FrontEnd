@@ -24,7 +24,7 @@ const SignUp = () => {
             });
             toast.success('Sign up successful!');
             setTimeout(() => {
-                navigate('/');
+                navigate('/Login');
             }, 3000);
         } catch (error) {
             console.error('Error during login:', error);

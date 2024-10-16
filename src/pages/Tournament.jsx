@@ -12,6 +12,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { Box, TextField, Button } from '@mui/material';
 import { format } from 'date-fns';
 import CreateTournamentDialog from './CreateTournamentDialog';
+import { useNavigate } from 'react-router-dom';
 
 const columns = [
     { id: 'name', label: 'Name', minWidth: 170, align: 'left' },
@@ -34,6 +35,11 @@ const Tournament = () => {
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
     const [openDialog, setOpenDialog] = useState(false);
+    const navigate = useNavigate();
+
+    const handleRowClick = (id) => {
+        navigate(`/tournaments/${id}`);
+    };
 
     const fetchTournament = async () => {
         setLoading(true);
@@ -123,7 +129,7 @@ const Tournament = () => {
                         <TableBody>
                             {rows.length > 0 ? (
                                 rows.map((row) => (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id} onClick={() => handleRowClick(row.id)} style={{ cursor: 'pointer' }}>
                                         <TableCell align="left">{row.name}</TableCell>
                                         <TableCell align="left">{row.description}</TableCell>
                                         <TableCell align="left">{row.rules}</TableCell>

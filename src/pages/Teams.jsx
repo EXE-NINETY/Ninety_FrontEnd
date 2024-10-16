@@ -11,7 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Box, TextField, Button } from '@mui/material';
 import CreateTeamDialog from './CreateTeamDialog';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const columns = [
     { id: 'name', label: 'Name', minWidth: 170 },
@@ -27,10 +27,10 @@ const Teams = () => {
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
     const [openDialog, setOpenDialog] = useState(false);
-    const navigate = useNavigate(); // Use navigate for programmatic navigation
+    const navigate = useNavigate();
 
-    const handleRowClick = (id) => {
-        navigate(`/teams/${id}`); // Navigate to TeamDetail page with the team's ID
+    const handleRowClick = (id, tournamentId) => {
+        navigate(`/teams/${id}?tournamentId=${tournamentId}`);
     };
     const fetchTeams = async () => {
         setLoading(true);
@@ -119,7 +119,7 @@ const Teams = () => {
                         <TableBody>
                             {rows.length > 0 ? (
                                 rows.map((row) => (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id} onClick={() => handleRowClick(row.id)} style={{ cursor: 'pointer' }}>
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id} onClick={() => handleRowClick(row.id, row.tournament?.id)} style={{ cursor: 'pointer' }}>
                                         <TableCell align="left">{row.name}</TableCell>
                                         <TableCell align="left">{row.description}</TableCell>
                                         <TableCell align="right">{row.tournament?.name}</TableCell>

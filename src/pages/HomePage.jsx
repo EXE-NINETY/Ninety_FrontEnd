@@ -3,6 +3,8 @@ import { FaShieldAlt, FaTrophy, FaUsers } from 'react-icons/fa';
 
 const HomePage = () => {
     return (
+
+
         <div className="container">
             <div className="row">
                 <div className="col-md-4">
@@ -16,11 +18,12 @@ const HomePage = () => {
                                 the card's content.
                             </p>
                             <a href="/tournaments" className="btn btn-primary">
-                                Go somewhere
+                                Go tournament list
                             </a>
                         </div>
                     </div>
                 </div>
+
 
                 <div className="col-md-4">
                     <div className="card border-primary" style={{ width: "100%", borderWidth: '3px' }}>
@@ -33,7 +36,7 @@ const HomePage = () => {
                                 the card's content.
                             </p>
                             <a href="/teams" className="btn btn-primary">
-                                Go somewhere
+                                Go team list
                             </a>
                         </div>
                     </div>
@@ -43,7 +46,7 @@ const HomePage = () => {
                     <div className="card border-danger" style={{ width: "100%", borderWidth: '3px' }}>
                         <div className="card-body">
                             <h5 className="card-title">
-                                <FaUsers style={{ color: 'red' }} /> Card title
+                                <FaUsers style={{ color: 'red' }} /> Setting
                             </h5>
                             <p className="card-text">
                                 Some quick example text to build on the card title and make up the bulk of
@@ -56,7 +59,6 @@ const HomePage = () => {
                     </div>
                 </div>
 
-                {/* About us */}
                 <section className="py-3 py-md-5">
                     <div className="container">
                         <div className="row gy-3 gy-md-4 gy-lg-0 align-items-lg-center">
