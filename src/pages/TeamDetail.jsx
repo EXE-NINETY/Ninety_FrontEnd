@@ -5,13 +5,13 @@ import { Box, Typography, CircularProgress, Tabs, Tab, Table, TableBody, TableCe
 import { Button, Card, Col, Row } from 'react-bootstrap';
 import { AccessTime, CalendarToday, LocationOn } from '@mui/icons-material';
 import AddMemberDialog from './AddMemberDialog';
+import ViewDetailDialog from './ViewDetailDialog';
 
 const TeamDetail = () => {
     const { id } = useParams();
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const tournamentId = queryParams.get('tournamentId');
-
     const [team, setTeam] = useState(null);
     const [members, setMembers] = useState([]);
     const [matches, setMatches] = useState([]);
@@ -23,6 +23,7 @@ const TeamDetail = () => {
     const [error, setError] = useState('');
     const [value, setValue] = React.useState('one');
     const [openDialog, setOpenDialog] = useState(false);
+    const [selectedMatchId, setSelectedMatchId] = useState(null);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -117,8 +118,9 @@ const TeamDetail = () => {
         }, {});
     };
 
-    const handleOpenDialog = () => {
+    const handleOpenDialog = (matchId) => {
         setOpenDialog(true);
+        setSelectedMatchId(matchId);
     };
 
     const handleCloseDialog = () => {
@@ -215,7 +217,11 @@ const TeamDetail = () => {
                                     {groupedMatches[round].map(match => (
                                         <Card className="mb-3 shadow-sm" key={match.id} style={{ transition: 'transform 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} >
                                             <Card.Header className="bg-primary text-white">
-                                                <h5 className="m-0">{`Match: Team ${match.teamA} vs Team ${match.teamB}`}</h5>
+                                                <h5 className="m-0 text-lg font-bold">
+                                                    <span className="bg-blue-100 text-blue-500 px-2 py-1 rounded">{`Team ${match.teamAName}`}</span>
+                                                    <span className="mx-2 text-gray-700 font-medium">{match.totalResult === "Not happened yet" ? "vs" : match.totalResult}</span>
+                                                    <span className="bg-red-100 text-red-500 px-2 py-1 rounded">{`Team ${match.teamBName}`}</span>
+                                                </h5>
                                             </Card.Header>
                                             <Card.Body>
                                                 <Row>
@@ -227,19 +233,31 @@ const TeamDetail = () => {
                                                         <AccessTime className="mr-2" />
                                                         <p className="m-0"><strong>Time:</strong> {new Date(match.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                                                     </Col>
-                                                    <Col md={4} className="d-flex align-items-center text-right">
+                                                    {/* <Col md={4} className="d-flex align-items-center text-right">
                                                         <LocationOn className="mr-2" />
                                                         <p className="m-0"><strong>Location:</strong> {match.tournament.place}</p>
-                                                    </Col>
+                                                    </Col> */}
                                                 </Row>
                                                 <Row>
                                                     <Col className="text-right mt-3">
-                                                        <Button variant="light" className="text-primary border">View Details</Button>
+                                                        <Button
+                                                            onClick={() => handleOpenDialog(match.id)}
+                                                            variant="contained"
+                                                            color="success"
+                                                            className="mb-3"
+                                                        >
+                                                            View Details
+                                                        </Button>
                                                     </Col>
                                                 </Row>
                                             </Card.Body>
                                         </Card>
                                     ))}
+                                    <ViewDetailDialog
+                                        open={openDialog}
+                                        onClose={handleCloseDialog}
+                                        id={selectedMatchId}
+                                    />
                                 </div>
                             ))}
                         </div>

@@ -11,20 +11,19 @@ import Teams from './pages/Teams';
 import Tournament from './pages/Tournament';
 import TeamDetail from './pages/TeamDetail';
 import TournamentDetail from './pages/TournamentDetail';
+import PrivateRoute from './pages/PrivateRoute';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
     children: [
-      { path: "/", element: <HomePage /> },
-      { path: "/about", element: <Profile /> },
-      { path: "/teams", element: <Teams /> },
-      { path: "/tournaments", element: <Tournament /> },
-      { path: "/teams/:id", element: <TeamDetail /> },
-      { path: "/tournaments/:id", element: <TournamentDetail /> },
-      // { path: "products/:id", element: <ProductDetailPage /> }, // Route cho ProductDetailPage
-      // { path: "flowers/:id", element: <FlowerDetailPage /> }, // Route cho FlowerDetailPage
+      { path: "/", element: <PrivateRoute><HomePage /></PrivateRoute> },
+      { path: "/about", element: <PrivateRoute><Profile /></PrivateRoute> }, 
+      { path: "/teams", element: <PrivateRoute><Teams /></PrivateRoute> }, 
+      { path: "/tournaments", element: <PrivateRoute><Tournament /></PrivateRoute> }, 
+      { path: "/teams/:id", element: <PrivateRoute><TeamDetail /></PrivateRoute> }, 
+      { path: "/tournaments/:id", element: <PrivateRoute><TournamentDetail /></PrivateRoute> }, 
     ],
     errorElement: <NotFoundPage />,
   },

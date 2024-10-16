@@ -9,7 +9,7 @@ function Layout() {
             <CustomNavbar />
             <div className="content-container">
                 <div className="App-header">
-                    <Outlet /> {/* Nội dung trang sẽ được render ở đây */}
+                    <Outlet />
                 </div>
                 <Footer />
             </div>

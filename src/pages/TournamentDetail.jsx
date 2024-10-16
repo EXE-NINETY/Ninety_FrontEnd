@@ -287,7 +287,11 @@ const TournamentDetail = () => {
                                             onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
                                         >
                                             <Card.Header className="bg-primary text-white">
-                                                <h5 className="m-0">{`Match: Team ${match.teamA} vs Team ${match.teamB}`}</h5>
+                                                <h5 className="m-0 text-lg font-bold">
+                                                    <span className="bg-blue-100 text-blue-500 px-2 py-1 rounded">{`Team ${match.teamAName}`}</span>
+                                                    <span className="mx-2 text-gray-700 font-medium">{match.totalResult === "Not happened yet" ? "vs" : match.totalResult}</span>
+                                                    <span className="bg-red-100 text-red-500 px-2 py-1 rounded">{`Team ${match.teamBName}`}</span>
+                                                </h5>
                                             </Card.Header>
                                             <Card.Body>
                                                 <Row>
