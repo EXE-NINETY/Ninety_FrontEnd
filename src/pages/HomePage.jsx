@@ -3,9 +3,17 @@ import { FaShieldAlt, FaTrophy, FaUsers } from 'react-icons/fa';
 
 const HomePage = () => {
     return (
-
-
         <div className="container">
+            <div className="row my-5">
+                <div className="col text-center">
+                    <img
+                        src="/poster.jpg"
+                        alt="Poster"
+                        className="img-fluid rounded"
+                        style={{ maxWidth: '100%', height: 'auto' }}
+                    />
+                </div>
+            </div>
             <div className="row">
                 <div className="col-md-4">
                     <div className="card border-warning" style={{ width: "100%", borderWidth: '3px' }}>
