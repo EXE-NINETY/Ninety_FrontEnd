@@ -1,18 +1,28 @@
 import React from "react";
 import { Image, NavDropdown } from "react-bootstrap";
+import { FaHome, FaLink, FaUser } from 'react-icons/fa';
 
 const CustomNavbar = () => {
     const accountDTO = JSON.parse(sessionStorage.getItem('accountDTO'));
+
     return (
         <nav
-            className="navbar navbar-expand-xxl navbar-dark"
-            aria-label="Seventh navbar example"
+            className="navbar navbar-expand-xxl navbar-light shadow-sm"
             style={{ backgroundColor: '#5BBE01' }}
         >
             <div className="container-fluid">
-                <a className="navbar-brand" href="/" >
+                <a className="navbar-brand d-flex align-items-center fw-bold" href="/" style={{ color: '#fff', fontSize: '1.5rem' }}>
+                    <Image
+                        src="../logo.jpg"
+                        alt="Logo"
+                        width="40"
+                        height="40"
+                        roundedCircle
+                        className="me-2"
+                    />
                     NINETY
                 </a>
+
                 <button
                     className="navbar-toggler"
                     type="button"
@@ -24,85 +34,46 @@ const CustomNavbar = () => {
                 >
                     <span className="navbar-toggler-icon" />
                 </button>
+
                 <div className="collapse navbar-collapse" id="navbarsExampleXxl">
-                    <ul className="navbar-nav me-auto mb-2 mb-xl-0">
+                    <ul className="navbar-nav me-auto mb-2 mb-xl-0 align-items-center">
                         <li className="nav-item">
-                            <a className="nav-link active" aria-current="page" href="#">
-                                Home
+                            <a className="nav-link text-light" aria-current="page" href="/">
+                                <FaHome className="me-2" /> Home
                             </a>
                         </li>
+
                         <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                Link
+                            <a className="nav-link text-light" href="/tournaments">
+                                <FaLink className="me-2" /> Tournament
                             </a>
                         </li>
+
                         <li className="nav-item">
-                            <a className="nav-link disabled" aria-disabled="true">
-                                Disabled
+                            <a className="nav-link text-light" href="/teams">
+                                <FaUser className="me-2" /> Team
                             </a>
-                        </li>
-                        <li className="nav-item dropdown">
-                            <a
-                                className="nav-link dropdown-toggle"
-                                href="#"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                            >
-                                Dropdown
-                            </a>
-                            <ul className="dropdown-menu">
-                                <li>
-                                    <a className="dropdown-item" href="#">
-                                        Action
-                                    </a>
-                                </li>
-                                <li>
-                                    <a className="dropdown-item" href="#">
-                                        Another action
-                                    </a>
-                                </li>
-                                <li>
-                                    <a className="dropdown-item" href="#">
-                                        Something else here
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                     </ul>
-                    {/* <form role="search" className="me-4">
-                        <input
-                            className="form-control"
-                            type="search"
-                            placeholder="Search"
-                            aria-label="Search"
-                        />
-                    </form> */}
-                    <div className="d-flex">
-                        <Image
-                            src="../logo192.png"
-                            alt="123"
-                            width="30"
-                            height="30"
-                            rounded
-                            className="me-2"
-                        />
+
+                    <div className="d-flex align-items-center">
                         <NavDropdown
                             title={
-                                <span>
-                                    Welcome, <span style={{ color: 'black' }}>{accountDTO?.name || "Guest"}</span>
+                                <span className="text-white">
+                                    <FaUser className="me-2" />
+                                    Welcome, <span className="fw-bold">{accountDTO?.name || "Guest"}</span>
                                 </span>
                             }
-                            id="basic-nav-dropdown"
+                            id="user-nav-dropdown"
+                            align="end"
                         >
-                            <NavDropdown.Item href="/about">Hồ sơ</NavDropdown.Item>
-                            <NavDropdown.Item href="/Login">Đăng xuất</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                            <NavDropdown.Item href="/about">Profile</NavDropdown.Item>
+                            <NavDropdown.Item href="/Login">Logout</NavDropdown.Item>
                         </NavDropdown>
                     </div>
                 </div>
             </div>
         </nav>
-
     );
 };
 
