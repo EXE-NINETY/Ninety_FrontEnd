@@ -89,13 +89,17 @@ const TournamentDetail = () => {
         setLoadingCreateMatch(true);
         try {
             const matchData = {
-
                 tournamentId: id,
             };
-            await axios.post(`https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/match/${id}`, matchData);
+            if (tournament.format === 'league') {
+                await axios.post(`https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/match/${id}`, matchData);
+            } else if (tournament.format === 'knockout') {
+                await axios.post(`https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/match/bracket/${id}`, matchData);
+            }
             fetchMatches();
         } catch (err) {
-            toast.error('Error creating match. Please try again.');
+            const errorMessage = err.response?.data?.message || 'Error creating match. Please try again.';
+            toast.error(errorMessage);
         } finally {
             setLoadingCreateMatch(false);
         }
@@ -207,7 +211,7 @@ const TournamentDetail = () => {
 
                 {value === 'two' && (
                     <>
-                        {tournament.isRegister !== true && (
+                        {tournament.isRegister !== false && (
                             <Button onClick={handleOpenDialog} variant="contained" color="error" className="mb-3">
                                 Add Team
                             </Button>
@@ -258,7 +262,7 @@ const TournamentDetail = () => {
                 {value === 'three' && (
                     <div className="container mt-5">
 
-                        {tournament.isRegister !== true && (
+                        {tournament.isRegister !== false && (
                             <Button
                                 variant="contained"
                                 color="primary"
