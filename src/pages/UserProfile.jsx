@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Image, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
 
 const countries = [
     { code: "US", name: "United States of America" },
@@ -19,6 +18,8 @@ const Profile = () => {
         gender: '',
         phoneNumber: '',
     });
+
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         const accountDTO = JSON.parse(sessionStorage.getItem('accountDTO'));
@@ -71,6 +72,9 @@ const Profile = () => {
             });
     };
 
+    const handleShowModal = () => setShowModal(true);
+    const handleCloseModal = () => setShowModal(false);
+
     return (
         <Container className="rounded bg-white mt-5 mb-5">
             <Row>
@@ -83,6 +87,25 @@ const Profile = () => {
                         />
                         <span className="font-weight-bold text-dark">{profile.name}</span>
                         <span className="text-dark">{profile.phoneNumber}</span>
+                        <div className="mt-3 text-center">
+                            <Button variant="primary" onClick={handleShowModal}>
+                                Update member VIP
+                            </Button>
+                        </div>
+
+                        <Modal show={showModal} onHide={handleCloseModal} centered>
+                            <Modal.Header closeButton>
+                                <Modal.Title>MoMo QR 100.000 VNĐ/month</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body className="text-center">
+                                <Image src="momo.jpg" alt="MoMo QR" fluid />
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleCloseModal}>
+                                    Close
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
                     </div>
                 </Col>
                 <Col md={9} className="border-right">
@@ -146,18 +169,6 @@ const Profile = () => {
                                     </Form.Group>
                                 </Col>
 
-                                {/* <Col md={9}>
-                                    <Form.Group>
-                                        <Form.Label className="labels text-dark">Nationality</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="nationality"
-                                            value={profile.nationality}
-                                            name="nationality"
-                                            onChange={handleChange}
-                                        />
-                                    </Form.Group>
-                                </Col> */}
                                 <Col md={9}>
                                     <Form.Group>
                                         <Form.Label className="labels text-dark">Nationality</Form.Label>
@@ -184,6 +195,8 @@ const Profile = () => {
                                 </Button>
                             </div>
                         </Form>
+
+
                     </div>
                 </Col>
             </Row>
