@@ -34,6 +34,7 @@ const Profile = () => {
                     nationality: userData.nationality || '',
                     gender: userData.gender || '',
                     phoneNumber: userData.phoneNumber || '',
+                    userStatus: userData.userStatus || '',
                 });
             })
             .catch(error => {
@@ -87,12 +88,13 @@ const Profile = () => {
                         />
                         <span className="font-weight-bold text-dark">{profile.name}</span>
                         <span className="text-dark">{profile.phoneNumber}</span>
-                        <div className="mt-3 text-center">
-                            <Button variant="primary" onClick={handleShowModal}>
-                                Update member VIP
-                            </Button>
-                        </div>
-
+                        {profile.userStatus !== 'VIP' && (
+                            <div className="mt-3 text-center">
+                                <Button variant="primary" onClick={handleShowModal}>
+                                    Update member VIP
+                                </Button>
+                            </div>
+                        )}
                         <Modal show={showModal} onHide={handleCloseModal} centered>
                             <Modal.Header closeButton>
                                 <Modal.Title>MoMo QR 100.000 VNĐ/month</Modal.Title>
