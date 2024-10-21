@@ -24,7 +24,7 @@ const Profile = () => {
         const accountDTO = JSON.parse(sessionStorage.getItem('accountDTO'));
         console.log(accountDTO.id);
 
-        axios.get(`http://localhost:5090/api/user/${accountDTO.id}`)
+        axios.get(`https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/user/${accountDTO.id}`)
             .then(response => {
                 const userData = response.data.data;
                 setProfile({
@@ -61,7 +61,7 @@ const Profile = () => {
             phoneNumber: profile.phoneNumber,
         };
 
-        axios.put(`http://localhost:5090/api/user/${accountDTO.id}`, updatedProfile)
+        axios.put(`https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/user/${accountDTO.id}`, updatedProfile)
             .then(response => {
                 console.log('Profile updated successfully:', response.data);
                 toast.success('Update profile successful!');

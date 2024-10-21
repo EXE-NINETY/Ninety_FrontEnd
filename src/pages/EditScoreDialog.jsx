@@ -19,7 +19,7 @@ export default function ViewDetailScoreDialog({ open, onClose, id }) {
     const fetchMatchDetails = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:5090/api/matchDetails/${id}`);
+            const response = await axios.get(`https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/matchDetails/${id}`);
             setMatchDetails(response.data.data);
             setEditScores({
                 apointSet1: response.data.data.apointSet1,
@@ -47,7 +47,7 @@ export default function ViewDetailScoreDialog({ open, onClose, id }) {
     const handleSubmit = async () => {
         setLoading(true);
         try {
-            await axios.put(`http://localhost:5090/api/matchDetails/id?id=${id}`, editScores);
+            await axios.put(`https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/matchDetails/id?id=${id}`, editScores);
             toast.success('Match details updated successfully');
             onClose();
         } catch (error) {

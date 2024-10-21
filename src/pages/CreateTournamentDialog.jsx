@@ -34,7 +34,7 @@ export default function CreateTournamentDialog({ open, onClose, onTournamentCrea
     React.useEffect(() => {
         const fetchSports = async () => {
             try {
-                const response = await axios.get('http://localhost:5090/api/sport');
+                const response = await axios.get('https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/sport');
                 setSports(response.data.data);
             } catch (error) {
                 console.error('Error fetching sports:', error);
@@ -63,7 +63,7 @@ export default function CreateTournamentDialog({ open, onClose, onTournamentCrea
         event.preventDefault();
         setLoading(true);
         try {
-            const response = await axios.post('http://localhost:5090/api/tournament', formData);
+            const response = await axios.post('https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/tournament', formData);
             console.log('Tournament created:', response.data);
 
             if (onTournamentCreated) {

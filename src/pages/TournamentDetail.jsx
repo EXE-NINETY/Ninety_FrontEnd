@@ -32,7 +32,7 @@ const TournamentDetail = () => {
     const fetchTeamMembers = async () => {
         setLoadingMembers(true);
         try {
-            const response = await axios.get(`http://localhost:5090/api/team/tournaments/${id}`);
+            const response = await axios.get(`https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/team/tournaments/${id}`);
             setTeams(response.data.data);
         } catch (err) {
             setError('Error fetching team members');
@@ -44,7 +44,7 @@ const TournamentDetail = () => {
     const fetchMatches = async () => {
         setLoadingMatches(true);
         try {
-            const response = await axios.get(`http://localhost:5090/api/match/tournament/${id}`);
+            const response = await axios.get(`https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/match/tournament/${id}`);
             setMatches(response.data.data);
         } catch (err) {
             setError('Error fetching match data');
@@ -56,7 +56,7 @@ const TournamentDetail = () => {
     const fetchRanking = async () => {
         setLoadingRanking(true);
         try {
-            const response = await axios.get(`http://localhost:5090/api/ranking/tournament/${id}`);
+            const response = await axios.get(`https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/ranking/tournament/${id}`);
             setRanking(response.data.data);
         } catch (err) {
             setError('Error fetching ranking data');
@@ -69,7 +69,7 @@ const TournamentDetail = () => {
         const fetchTeamDetail = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:5090/api/tournament/${id}`);
+                const response = await axios.get(`https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/tournament/${id}`);
                 setTournament(response.data.data);
                 console.log(response.data.data)
             } catch (err) {
@@ -92,7 +92,7 @@ const TournamentDetail = () => {
 
                 tournamentId: id,
             };
-            await axios.post(`http://localhost:5090/api/match/${id}`, matchData);
+            await axios.post(`https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/match/${id}`, matchData);
             fetchMatches();
         } catch (err) {
             toast.error('Error creating match. Please try again.');

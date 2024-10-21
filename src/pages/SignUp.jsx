@@ -15,7 +15,7 @@ const SignUp = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5090/api/auth/sign-up', {
+            const response = await axios.post('https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/auth/sign-up', {
                 name: name,
                 password: password,
                 email: email,

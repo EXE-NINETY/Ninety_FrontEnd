@@ -10,7 +10,7 @@ export default function ViewDetailDialog({ open, onClose, id }) {
     const fetchMatchDetails = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:5090/api/matchDetails/${id}`);
+            const response = await axios.get(`https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/matchDetails/${id}`);
             setMatchDetails(response.data.data);
         } catch (error) {
             toast.error('Error fetching match details');

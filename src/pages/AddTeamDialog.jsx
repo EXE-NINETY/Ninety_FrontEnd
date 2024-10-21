@@ -25,7 +25,7 @@ export default function AddTeamDialog({ open, onClose, id, onTeamUpdated }) {
         setLoading(true);
         console.log("summit success");
         try {
-            const response = await axios.post("http://localhost:5090/api/team/tournaments", {
+            const response = await axios.post("https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/team/tournaments", {
                 userId: accountDTO.id,
                 tournamentId: id,
                 name,

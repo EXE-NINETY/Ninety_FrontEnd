@@ -15,7 +15,7 @@ export default function AddMemberDialog({ open, onClose, teamId, onTeamUpdated }
             const fetchUsers = async () => {
                 setUserLoading(true);
                 try {
-                    const response = await axios.get('http://localhost:5090/api/user');
+                    const response = await axios.get('https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/user');
                     setUsers(response.data.data);
                 } catch (err) {
                     setError('Error fetching users');
@@ -36,7 +36,7 @@ export default function AddMemberDialog({ open, onClose, teamId, onTeamUpdated }
 
         setLoading(true);
         try {
-            const response = await axios.post(`http://localhost:5090/api/team/teamDetails?teamId=${teamId}&userId=${selectedUser.id}`);
+            const response = await axios.post(`https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/team/teamDetails?teamId=${teamId}&userId=${selectedUser.id}`);
             console.log(teamId)
             toast.success(`User ${selectedUser.name} registered successfully for team ${teamId}`);
             if (onTeamUpdated) {

@@ -45,7 +45,7 @@ const Tournament = () => {
         setLoading(true);
         try {
             const response = await axios.get(
-                `http://localhost:5090/api/tournament/all?PageNumber=${page + 1}&PageSize=${rowsPerPage}&Name=${searchQuery}`
+                `https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/tournament/all?PageNumber=${page + 1}&PageSize=${rowsPerPage}&Name=${searchQuery}`
             );
             console.log(response.data.data)
             const { data, totalCount } = response.data;

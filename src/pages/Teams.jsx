@@ -36,7 +36,7 @@ const Teams = () => {
         setLoading(true);
         try {
             const response = await axios.get(
-                `http://localhost:5090/api/team/all?PageNumber=${page + 1}&PageSize=${rowsPerPage}&Name=${searchQuery}`
+                `https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/team/all?PageNumber=${page + 1}&PageSize=${rowsPerPage}&Name=${searchQuery}`
             );
             const { data, totalCount } = response.data;
             setRows(data || []);

@@ -32,7 +32,7 @@ const TeamDetail = () => {
     const fetchTeamMembers = async () => {
         setLoadingMembers(true);
         try {
-            const response = await axios.get(`http://localhost:5090/api/team/member/${id}`);
+            const response = await axios.get(`https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/team/member/${id}`);
             setMembers(response.data.data);
         } catch (err) {
             setError('Error fetching team members');
@@ -44,7 +44,7 @@ const TeamDetail = () => {
     const fetchMatches = async () => {
         setLoadingMatches(true);
         try {
-            const response = await axios.get(`http://localhost:5090/api/match/teams/${id}?tournamentId=${tournamentId}`);
+            const response = await axios.get(`https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/match/teams/${id}?tournamentId=${tournamentId}`);
             setMatches(response.data.data);
         } catch (err) {
             setError('Error fetching match data');
@@ -56,7 +56,7 @@ const TeamDetail = () => {
     const fetchRanking = async () => {
         setLoadingRanking(true);
         try {
-            const response = await axios.get(`http://localhost:5090/api/ranking/tournament/${tournamentId}`);
+            const response = await axios.get(`https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/ranking/tournament/${tournamentId}`);
             setRanking(response.data.data);
         } catch (err) {
             setError('Error fetching ranking data');
@@ -69,7 +69,7 @@ const TeamDetail = () => {
         const fetchTeamDetail = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:5090/api/team/${id}`);
+                const response = await axios.get(`https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/team/${id}`);
                 setTeam(response.data.data);
             } catch (err) {
                 setError('Error fetching team details');
