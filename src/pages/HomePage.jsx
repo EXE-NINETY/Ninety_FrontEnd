@@ -7,7 +7,7 @@ const HomePage = () => {
             <div className="row my-5">
                 <div className="col text-center">
                     <img
-                        src="/poster.jpg"
+                        src="/poster1.jpg"
                         alt="Poster"
                         className="img-fluid rounded"
                         style={{ maxWidth: '100%', height: 'auto' }}
