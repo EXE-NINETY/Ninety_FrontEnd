@@ -22,6 +22,13 @@ const Login = () => {
             navigate('/');
         } catch (error) {
             console.error('Error during login:', error);
+            if (error.response && error.response.data && error.response.data.message) {
+                toast.error(`Lỗi: ${error.response.data.message}`);
+            } else if (error.response && error.response.status) {
+                toast.error(`Lỗi: ${error.response.status} -  Invalid username or password !!!`);
+            } else {
+                toast.error('An unexpected error occurred. Please try again.');
+            }
         }
     };
 
@@ -32,7 +39,7 @@ const Login = () => {
                     <Row className="d-flex align-items-center justify-content-center h-100">
                         <Col md={8} lg={7} xl={6}>
                             <Image
-                                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+                                src="/posterlogin.png"
                                 fluid
                                 alt="Phone image"
                             />
@@ -79,11 +86,11 @@ const Login = () => {
                                     Sign up
                                 </Button>
 
-                                <div className="divider d-flex align-items-center my-4">
+                                {/* <div className="divider d-flex align-items-center my-4">
                                     <p className="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
-                                </div>
+                                </div> */}
 
-                                <Button
+                                {/* <Button
                                     className="btn-lg btn-block me-1"
                                     style={{ backgroundColor: '#3b5998' }}
                                     href="#!"
@@ -96,7 +103,7 @@ const Login = () => {
                                     href="#!"
                                 >
                                     <i className="fab fa-twitter me-2"></i>Continue with Twitter
-                                </Button>
+                                </Button> */}
                             </Form>
                         </Col>
                     </Row>

@@ -27,7 +27,13 @@ const SignUp = () => {
                 navigate('/Login');
             }, 3000);
         } catch (error) {
-            console.error('Error during login:', error);
+            console.error('Error during sign-up:', error);
+            // Display error message using toast
+            if (error.response && error.response.data && error.response.data.message) {
+                toast.error(`Lỗi: ${error.response.data.message}`);
+            } else {
+                toast.error('An unexpected error occurred. Please try again.');
+            }
         }
     };
 
@@ -38,7 +44,7 @@ const SignUp = () => {
                     <Row className="d-flex align-items-center justify-content-center h-100">
                         <Col md={8} lg={7} xl={6}>
                             <Image
-                                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+                                src="/posterlogin.png"
                                 fluid
                                 alt="Phone image"
                             />
@@ -108,13 +114,14 @@ const SignUp = () => {
                                     </Form.Select>
                                 </Form.Group>
 
-                                <Button className="btn-lg btn-block me-2" href='/Login'>
+                                <Button type="submit" className="btn-lg btn-success me-2">
+                                    Sign up
+                                </Button>
+
+                                <Button className="btn-lg btn-block " href='/Login'>
                                     Sign in
                                 </Button>
 
-                                <Button type="submit" className="btn-lg btn-success">
-                                    Sign up
-                                </Button>
                             </Form>
                         </Col>
                     </Row>
