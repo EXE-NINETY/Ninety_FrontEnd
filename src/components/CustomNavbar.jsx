@@ -54,12 +54,13 @@ const CustomNavbar = () => {
                                 <FaUser className="me-2" /> Team
                             </a>
                         </li>
-
-                        <li className="nav-item">
-                            <a className="nav-link text-light" href="/dashboard">
-                                <FaMoneyBillAlt className="me-2" /> Dashboard/Revenue
-                            </a>
-                        </li>
+                        {accountDTO.role === "Staff" && (
+                            <li className="nav-item">
+                                <a className="nav-link text-light" href="/dashboard">
+                                    <FaMoneyBillAlt className="me-2" /> Dashboard/Revenue
+                                </a>
+                            </li>
+                        )}
                     </ul>
 
                     <div className="d-flex align-items-center">

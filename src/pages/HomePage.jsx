@@ -2,6 +2,7 @@ import React from 'react';
 import { FaShieldAlt, FaTrophy, FaUsers } from 'react-icons/fa';
 
 const HomePage = () => {
+    const accountDTO = JSON.parse(sessionStorage.getItem('accountDTO'));
     return (
         <div className="container">
             <div className="row my-5">
@@ -22,8 +23,8 @@ const HomePage = () => {
                                 <FaTrophy style={{ color: 'gold' }} /> Tournament
                             </h5>
                             <p className="card-text">
-                                Some quick example text to build on the card title and make up the bulk of
-                                the card's content.
+                                Explore exciting tournaments tailored for all skill levels.
+                                Compete, showcase your talent, and connect with fellow players!
                             </p>
                             <a href="/tournaments" className="btn btn-primary">
                                 Go tournament list
@@ -40,8 +41,7 @@ const HomePage = () => {
                                 <FaShieldAlt style={{ color: 'blue' }} /> Team
                             </h5>
                             <p className="card-text">
-                                Some quick example text to build on the card title and make up the bulk of
-                                the card's content.
+                                Build your dream team or join an existing one! Collaborate, compete, and create unforgettable memories.
                             </p>
                             <a href="/teams" className="btn btn-primary">
                                 Go team list
@@ -50,22 +50,25 @@ const HomePage = () => {
                     </div>
                 </div>
 
-                <div className="col-md-4">
-                    <div className="card border-danger" style={{ width: "100%", borderWidth: '3px' }}>
-                        <div className="card-body">
-                            <h5 className="card-title">
-                                <FaUsers style={{ color: 'red' }} /> Setting
-                            </h5>
-                            <p className="card-text">
-                                Some quick example text to build on the card title and make up the bulk of
-                                the card's content.
-                            </p>
-                            <a href="#" className="btn btn-primary">
-                                Go somewhere
-                            </a>
+                {accountDTO.role === "Staff" && (
+                    <div className="col-md-4">
+                        <div className="card border-danger" style={{ width: "100%", borderWidth: '3px' }}>
+                            <div className="card-body">
+                                <h5 className="card-title">
+                                    <FaUsers style={{ color: 'red' }} /> Admin Page
+                                </h5>
+                                <p className="card-text">
+                                    Manage tournaments, oversee team registrations, and keep everything running smoothly from your dashboard.
+                                </p>
+                                <a href="/dashboard" className="btn btn-primary">
+                                    Go admin page
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                )
+                }
+
 
                 <section className="py-3 py-md-5">
                     <div className="container">
