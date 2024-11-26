@@ -7,15 +7,17 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function CreateTeamDialog({ open, onClose, onTeamCreated }) {
     const [formData, setFormData] = React.useState({
         name: '',
         description: '',
         tournamentId: '',
-        userId: 1, // Assuming user ID is static or predefined
+        userId: 1,
     });
     const [loading, setLoading] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState('');
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -25,16 +27,20 @@ export default function CreateTeamDialog({ open, onClose, onTeamCreated }) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
+        setErrorMessage('');
         try {
-            const response = await axios.post('https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/team', formData);
+            const response = await axios.post('https://ninety-bzfzbhe0dzgdd0hb.southeastasia-01.azurewebsites.net/api/team/tournaments', formData);
             console.log('Team created:', response.data);
 
             if (onTeamCreated) {
                 onTeamCreated();
             }
             onClose();
+            toast.success('Team created successfully!');
         } catch (error) {
             console.error('Error creating new team:', error);
+            const errorMessage = error.response.data.message || 'An error occurred while creating the team.';
+            toast.error(errorMessage);
         } finally {
             setLoading(false);
         }

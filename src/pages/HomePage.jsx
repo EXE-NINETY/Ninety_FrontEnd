@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaShieldAlt, FaTrophy, FaUsers } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
-    const accountDTO = JSON.parse(sessionStorage.getItem('accountDTO'));
+    const navigate = useNavigate();
+    const accountDTO = JSON.parse(sessionStorage.getItem('accountDTO') || '{}');
+
+    useEffect(() => {
+        if (!accountDTO) {
+            navigate('/login');
+        }
+    }, [accountDTO, navigate]);
+    if (!accountDTO) {
+        return null;
+    }
+
     return (
         <div className="container">
             <div className="row my-5">
@@ -66,8 +78,7 @@ const HomePage = () => {
                             </div>
                         </div>
                     </div>
-                )
-                }
+                )}
 
 
                 <section className="py-3 py-md-5">
