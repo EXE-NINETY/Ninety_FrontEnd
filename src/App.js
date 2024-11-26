@@ -12,6 +12,7 @@ import Tournament from './pages/Tournament';
 import TeamDetail from './pages/TeamDetail';
 import TournamentDetail from './pages/TournamentDetail';
 import PrivateRoute from './pages/PrivateRoute';
+import Dashboard from './pages/Dashboard';
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,8 @@ const router = createBrowserRouter([
       { path: "/teams", element: <PrivateRoute><Teams /></PrivateRoute> }, 
       { path: "/tournaments", element: <PrivateRoute><Tournament /></PrivateRoute> }, 
       { path: "/teams/:id", element: <PrivateRoute><TeamDetail /></PrivateRoute> }, 
-      { path: "/tournaments/:id", element: <PrivateRoute><TournamentDetail /></PrivateRoute> }, 
+      { path: "/tournaments/:id", element: <PrivateRoute><TournamentDetail /></PrivateRoute> },
+      { path: "/dashboard", element: <PrivateRoute><Dashboard /></PrivateRoute> }, 
     ],
     errorElement: <NotFoundPage />,
   },

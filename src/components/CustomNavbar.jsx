@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, NavDropdown } from "react-bootstrap";
-import { FaHome, FaLink, FaUser } from 'react-icons/fa';
+import { FaHome, FaLink, FaMoneyBillAlt, FaUser } from 'react-icons/fa';
 
 const CustomNavbar = () => {
     const accountDTO = JSON.parse(sessionStorage.getItem('accountDTO'));
@@ -52,6 +52,12 @@ const CustomNavbar = () => {
                         <li className="nav-item">
                             <a className="nav-link text-light" href="/teams">
                                 <FaUser className="me-2" /> Team
+                            </a>
+                        </li>
+
+                        <li className="nav-item">
+                            <a className="nav-link text-light" href="/dashboard">
+                                <FaMoneyBillAlt className="me-2" /> Dashboard/Revenue
                             </a>
                         </li>
                     </ul>
