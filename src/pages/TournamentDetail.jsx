@@ -1,7 +1,7 @@
 import { Box, Button, CircularProgress, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Card, Col, Row } from 'react-bootstrap';
 import { AccessTime, CalendarToday, LocationOn } from '@mui/icons-material';
 import AddTeamDialog from './AddTeamDialog';
@@ -24,10 +24,17 @@ const TournamentDetail = () => {
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedMatchId, setSelectedMatchId] = useState(null);
 
+    const navigate = useNavigate();
+
+    const handleRowClick = (teamId, tournamentId) => {
+        navigate(`/teams/${teamId}?tournamentId=${tournamentId}`);
+    };
+
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
 
     const fetchTeamMembers = async () => {
         setLoadingMembers(true);
@@ -234,7 +241,14 @@ const TournamentDetail = () => {
                                     <TableBody>
                                         {teams.length > 0 ? (
                                             teams.map((team) => (
-                                                <TableRow hover role="checkbox" tabIndex={-1} key={team.id}>
+                                                <TableRow
+                                                    hover
+                                                    role="checkbox"
+                                                    tabIndex={-1}
+                                                    key={team.id}
+                                                    onClick={() => handleRowClick(team.id, id)} // Chuyển hướng khi click
+                                                    style={{ cursor: 'pointer' }} // Thêm con trỏ chuột để biểu thị có thể click
+                                                >
                                                     <TableCell>{team.name}</TableCell>
                                                     <TableCell>{team.description}</TableCell>
                                                     <TableCell>{team.tournament.name}</TableCell>
