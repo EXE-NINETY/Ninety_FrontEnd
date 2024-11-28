@@ -34,19 +34,19 @@ export default function ViewDetailDialog({ open, onClose, id }) {
                     <CircularProgress />
                 ) : matchDetails ? (
                     <div>
-                        <p><strong>Team A Points:</strong></p>
+                        <p><strong>{matchDetails.teamAName} Points:</strong></p>
                         <ul>
                             <li>Set 1: {matchDetails.apointSet1}</li>
                             <li>Set 2: {matchDetails.apointSet2}</li>
                             <li>Set 3: {matchDetails.apointSet3}</li>
                         </ul>
-                        <p><strong>Team B Points:</strong></p>
+                        <p><strong>{matchDetails.teamBName} Points:</strong></p>
                         <ul>
                             <li>Set 1: {matchDetails.bpointSet1}</li>
                             <li>Set 2: {matchDetails.bpointSet2}</li>
                             <li>Set 3: {matchDetails.bpointSet3}</li>
                         </ul>
-                        <p><strong>Winning Team:</strong> {matchDetails.match.winningTeam === 1 ? 'Team A' : 'Team B'}</p>
+                        <p><strong>Winning Team:</strong> {matchDetails.match.winningTeamName}</p>
                         <p><strong>Total Result:</strong> {matchDetails.match.totalResult}</p>
                         <p><strong>Match Date:</strong> {new Date(matchDetails.match.date).toLocaleDateString()}</p>
                     </div>

@@ -77,7 +77,7 @@ export default function ViewDetailScoreDialog({ open, onClose, id }) {
                     <CircularProgress />
                 ) : matchDetails ? (
                     <div>
-                        <p><strong>Team A Points:</strong></p>
+                        <p><strong>{matchDetails.teamAName} Points:</strong></p>
                         <ul>
                             <li>
                                 Set 1: <TextField
@@ -107,7 +107,7 @@ export default function ViewDetailScoreDialog({ open, onClose, id }) {
                                 />
                             </li>
                         </ul>
-                        <p><strong>Team B Points:</strong></p>
+                        <p><strong>{matchDetails.teamBName} Points:</strong></p>
                         <ul>
                             <li>
                                 Set 1: <TextField
@@ -137,7 +137,7 @@ export default function ViewDetailScoreDialog({ open, onClose, id }) {
                                 />
                             </li>
                         </ul>
-                        <p><strong>Winning Team:</strong> {matchDetails.match.winningTeam === 1 ? 'Team A' : 'Team B'}</p>
+                        <p><strong>Winning Team:</strong> {matchDetails.match.winningTeamName}</p>
                         <p><strong>Total Result:</strong> {matchDetails.match.totalResult}</p>
                         <p><strong>Match Date:</strong> {new Date(matchDetails.match.date).toLocaleDateString()}</p>
                     </div>
